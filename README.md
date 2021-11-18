@@ -3,7 +3,7 @@ Library to draw simple and sophisticated radar charts
 
 ```
 // To use the library, include the following script tags in your page.
-<script src="https://d3js.org/d3.v4.min.js"&gt;</script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="anandRadarChart.js"></script>
 
 // To configure it, include a script tag like this.
