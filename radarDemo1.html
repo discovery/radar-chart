@@ -1,0 +1,365 @@
+<html>
+
+<head>
+<title>Radar Chart Demo</title>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="anandRadarChart.js"></script>
+
+<script>
+var config =
+{
+	id: "radar", // id should match the div tag on the page.
+	radius: 400,
+	title: "Countries of the World",
+	legend: "right", // default
+	clockwise: false, // default
+	symmetric: false, // default
+	equidistant: false, // default
+	sections:
+	[
+		{ id: "africa",     name: "Africa",     colour: "orange" },
+		{ id: "americas",   name: "Americas",   colour: "lightgreen" },
+		{ id: "asia",       name: "Asia",       colour: "#ff8888" },
+		{ id: "europe",     name: "Europe",     colour: "#929244" },
+		{ id: "oceania",    name: "Oceania",    colour: "lightblue" },
+		// { id: "antarctica", name: "Antarctica", colour: "blue" },
+	],
+	rings:
+	[
+		{ id: "rep",      name: "Republic" },
+		{ id: "prov",     name: "Provisional" },
+		{ id: "constmon", name: "Constitutional Monarchy" },
+		{ id: "absmon",   name: "Absolute Monarchy" },
+		// { id: "dict",     name: "Dictatorship", colour: "#bb22dd" },
+	],
+	entries:
+	[
+
+{ section: 'americas', ring: 'rep', name: 'United States' },
+{ section: 'asia', ring: 'rep', name: 'China' },
+{ section: 'asia', ring: 'constmon', name: 'Japan' },
+{ section: 'europe', ring: 'rep', name: 'Germany' },
+{ section: 'europe', ring: 'constmon', name: 'United Kingdom' },
+{ section: 'asia', ring: 'rep', name: 'India' },
+{ section: 'europe', ring: 'rep', name: 'France' },
+{ section: 'europe', ring: 'rep', name: 'Italy' },
+{ section: 'americas', ring: 'constmon', name: 'Canada' },
+{ section: 'asia', ring: 'rep', name: 'South Korea' },
+{ section: 'europe', ring: 'rep', name: 'Russia' },
+{ section: 'oceania', ring: 'constmon', name: 'Australia' },
+{ section: 'americas', ring: 'rep', name: 'Brazil' },
+{ section: 'europe', ring: 'constmon', name: 'Spain' },
+{ section: 'americas', ring: 'rep', name: 'Mexico' },
+{ section: 'asia', ring: 'rep', name: 'Indonesia' },
+{ section: 'europe', ring: 'constmon', name: 'Netherlands' },
+{ section: 'europe', ring: 'rep', name: 'Switzerland' },
+{ section: 'asia', ring: 'absmon', name: 'Saudi Arabia' },
+{ section: 'asia', ring: 'rep', name: 'Turkey' },
+{ section: 'asia', ring: 'rep', name: 'Taiwan' },
+{ section: 'asia', ring: 'rep', name: 'Iran' },
+{ section: 'europe', ring: 'rep', name: 'Poland' },
+{ section: 'europe', ring: 'constmon', name: 'Sweden' },
+{ section: 'europe', ring: 'constmon', name: 'Belgium' },
+{ section: 'asia', ring: 'constmon', name: 'Thailand' },
+{ section: 'africa', ring: 'rep', name: 'Nigeria' },
+{ section: 'europe', ring: 'rep', name: 'Austria' },
+{ section: 'europe', ring: 'rep', name: 'Ireland' },
+{ section: 'asia', ring: 'rep', name: 'Israel' },
+{ section: 'europe', ring: 'constmon', name: 'Norway' },
+{ section: 'americas', ring: 'rep', name: 'Argentina' },
+{ section: 'asia', ring: 'rep', name: 'Bangladesh' },
+{ section: 'asia', ring: 'rep', name: 'Philippines' },
+{ section: 'asia', ring: 'constmon', name: 'United Arab Emirates' },
+{ section: 'africa', ring: 'rep', name: 'Egypt' },
+{ section: 'europe', ring: 'constmon', name: 'Denmark' },
+{ section: 'asia', ring: 'constmon', name: 'Malaysia' },
+
+{ section: 'asia', ring: 'rep', name: 'Vietnam' },
+{ section: 'africa', ring: 'rep', name: 'South Africa' },
+{ section: 'americas', ring: 'rep', name: 'Chile' },
+{ section: 'europe', ring: 'rep', name: 'Finland' },
+{ section: 'americas', ring: 'rep', name: 'Colombia' },
+{ section: 'asia', ring: 'rep', name: 'Pakistan' },
+{ section: 'europe', ring: 'rep', name: 'Romania' },
+{ section: 'europe', ring: 'rep', name: 'Czech Republic' },
+{ section: 'europe', ring: 'rep', name: 'Portugal' },
+{ section: 'oceania', ring: 'constmon', name: 'New Zealand' },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{ section: 'asia', ring: 'constmon', name: 'Bahrain' },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{ section: 'asia', ring: 'prov', name: 'Afghanistan' },
+
+
+
+
+
+{ section: 'asia', ring: 'rep', name: 'North Korea' },
+
+
+
+
+
+
+
+
+
+
+
+{ section: 'africa', ring: 'prov', name: 'Guinea' },
+
+
+
+
+
+
+
+
+{ section: 'africa', ring: 'prov', name: 'Chad' },
+
+
+
+
+
+
+
+{ section: 'americas', ring: 'constmon', name: 'Bermuda' },
+{ section: 'europe', ring: 'constmon', name: 'Monaco' },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{ section: 'africa', ring: 'rep', name: 'Burundi' },
+
+
+
+
+
+
+
+
+{ section: 'africa', ring: 'rep', name: 'Gambia' },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{ section: 'oceania', ring: 'constmon', name: 'Tuvalu' },
+
+	],
+};
+</script>
+
+<script>
+function getInputsAndDraw()
+{
+	document.getElementById('radar').innerHTML = "";
+	config.legend = document.getElementById('legend').value;
+	config.clockwise = document.getElementById('clockwise').checked;
+	config.symmetric = document.getElementById('symmetric').checked;
+	config.equidistant = document.getElementById('equidistant').checked;
+	if (document.getElementById('rotSection').checked)
+	{
+		config.sections.push(config.sections.shift());
+		document.getElementById('rotSection').checked = false;
+	}
+	if (document.getElementById('rotRing').checked)
+	{
+		config.rings.unshift(config.rings.pop());
+		document.getElementById('rotRing').checked = false;
+	}
+	showRadar(config);
+}
+</script>
+
+</head>
+
+<body onLoad="getInputsAndDraw()"
+	style="background-color: lightyellow; font-family: Arial, Helvetica, sans-serif;"
+>
+
+<p>
+First, we'll see some basic functionality that duplicates other radar chart
+libraries, but then goes slightly beyond them.
+</p>
+
+<p>
+Features to watch out for:
+<ul style="columns: 2">
+<li>
+	Rings can be equal-radii or equal-area, with the latter as default.
+</li>
+<li>
+	Sections can be equal-angle or data-proportional (the number of points
+	in the innermost ring), with the latter as default.
+</li>
+<li>
+	Sections can be laid out clockwise or counter-clockwise, with the
+	latter being the intuitive default.
+</li>
+<li>
+	Data point placement is random within its assigned section and ring,
+	which is why they move when you refresh the page.
+</li>
+<li>
+	The legend can be placed to the right, left, top or bottom of the
+	radar, not placed at all, with "right" as default.
+</li>
+<li>
+	Data points are "linked" to their legend entries, so both highlight
+	when you hover over either.
+</li>
+<li>
+	Data points are colour-coordinated with section colours.
+</li>
+<li>
+	Sections and rings are linked to data points by reference (an id), not
+	number, which is why you can shuffle the sections and rings however
+	you see fit.
+</li>
+<li>
+	Rotated sections and rings retain their colour and order in the legend.
+	(The data points themselves get re-ordered in the legend - that's a
+	bug, working on it.)
+</li>
+<li>
+	Data points can overlap, which means you can stuff a lot of data into
+	your chart, if you want to.
+</li>
+</ul>
+</p>
+
+<p>
+Play around with these widgets to change the layout. View source to see how
+to configure the JSON object to invoke the library. And when you're ready,
+move on to <a href="radarDemo2.html">the next demo</a>.
+
+Or click on:
+<a href="index.html">Start</a>,
+<a href="radarDemo1.html">Demo 1</a>,
+<a href="radarDemo2.html">Demo 2</a>,
+<a href="radarDemo3.html">Demo 3</a>,
+<a href="radarDemo4.html">Demo 4</a>,
+<a href="radarDemo5.html">Demo 5</a>,
+<a href="radarDemo6.html">Demo 6</a>.
+</p>
+
+<div>
+<form name="questionsForm" id="questionsForm" method="POST" onChange="getInputsAndDraw();">
+<select id="legend">
+	<option selected>Right</option>
+	<option>Left</option>
+	<option>Bottom</option>
+	<option>Top</option>
+	<option>None</option>
+</select>
+<label for="legend">legend</label>
+<input type="checkbox" id="clockwise" name="clockwise">
+<label for="clockwise">clockwise</label>
+<input type="checkbox" id="symmetric" name="symmetric">
+<label for="symmetric">symmetric</label>
+<input type="checkbox" id="equidistant" name="equidistant">
+<label for="equidistant">equidistant</label>
+<input type="checkbox" id="rotSection" name="rotateSection">
+<label for="rotSection">rotate section</label>
+<input type="checkbox" id="rotRing" name="rotateRing">
+<label for="rotRing">rotate ring</label>
+</form>
+</div>
+
+<!--
+	The radar chart placeholder. You can give it fonts and background
+	colours as you see fit. The id here has to match the one specified in
+	the configuration above.
+-->
+<div id="radar"></div>
+
+</body>
+</html>

@@ -1,0 +1,346 @@
+<html>
+
+<head>
+<title>Radar Chart Demo</title>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="anandRadarChart.js"></script>
+
+<script>
+var config =
+{
+	id: "radar", // id should match the div tag on the page.
+	radius: 400,
+	title: "Countries of the World",
+	legend: "right", // default
+	clockwise: false, // default
+	symmetric: false, // default
+	equidistant: false, // default
+	sections:
+	[
+		{ id: "africa",     name: "Africa",     colour: "orange" },
+		{ id: "americas",   name: "Americas",   colour: "lightgreen" },
+		{ id: "asia",       name: "Asia",       colour: "#ff8888" },
+		{ id: "europe",     name: "Europe",     colour: "#929244" },
+		{ id: "oceania",    name: "Oceania",    colour: "lightblue" },
+	],
+	rings:
+	[
+		{ id: "rep",      name: "Republic" },
+		{ id: "prov",     name: "Provisional" },
+		{ id: "constmon", name: "Constitutional Monarchy" },
+		{ id: "absmon",   name: "Absolute Monarchy" },
+	],
+	entries:
+	[
+
+{ section: 'americas', ring: 'rep', name: 'United States', dr: '0.904395992921608', dt: '0.926', z: '60.567803580409', ds: '0.895773607843347', dc: '0.5' },
+{ section: 'asia', ring: 'rep', name: 'China', dr: '1.0299533265278', dt: '0.761', z: '35.2505478597251', ds: '0.896426745985466', dc: '0.5' },
+{ section: 'asia', ring: 'constmon', name: 'Japan', dr: '0.819465347143154', dt: '0.919', z: '53.9150619971798', ds: '0.615492844941799', dc: '0.5' },
+{ section: 'europe', ring: 'rep', name: 'Germany', dr: '0.783950809024979', dt: '0.947', z: '56.6507651880147', ds: '0.610561375249178', dc: '0.5' },
+{ section: 'europe', ring: 'constmon', name: 'United Kingdom', dr: '0.765320208623606', dt: '0.932', z: '55.0742584492072', ds: '0.576940557664113', dc: '0.6' },
+{ section: 'asia', ring: 'rep', name: 'India', dr: '1.02822014024195', dt: '0.645', z: '11.057271246149', ds: '0.803366890307016', dc: '0.6', colour: 'lightblue' },
+{ section: 'europe', ring: 'rep', name: 'France', dr: '0.765842737519197', dt: '0.901', z: '54.1001969234439', ds: '0.661328097808022', dc: '0.6' },
+{ section: 'europe', ring: 'rep', name: 'Italy', dr: '0.754330238955364', dt: '0.892', z: '51.2097272061178', ds: '0.595811068544232', dc: '0.6' },
+{ section: 'americas', ring: 'constmon', name: 'Canada', dr: '0.717006928247397', dt: '0.929', z: '55.7960353893551', ds: '0.899866743144352', dc: '0.6' },
+{ section: 'asia', ring: 'rep', name: 'South Korea', dr: '0.742650329807474', dt: '0.916', z: '50.9363234104083', ds: '0.500182212426245', dc: '0.6' },
+{ section: 'europe', ring: 'rep', name: 'Russia', dr: '0.832972252535931', dt: '0.824', z: '35.1467057362041', ds: '0.946590312235254', dc: '0.6' },
+{ section: 'oceania', ring: 'constmon', name: 'Australia', dr: '0.682633223663624', dt: '0.944', z: '59.309364027922', ds: '0.877208126123463', dc: '0.6' },
+{ section: 'americas', ring: 'rep', name: 'Brazil', dr: '0.86604063534752', dt: '0.765', z: '27.6782822300796', ds: '0.886044754038494', dc: '0.6' },
+{ section: 'europe', ring: 'constmon', name: 'Spain', dr: '0.735145081532602', dt: '0.904', z: '49.124304174444', ds: '0.64082873009392', dc: '0.6' },
+{ section: 'americas', ring: 'rep', name: 'Mexico', dr: '0.820083776018585', dt: '0.779', z: '32.0809315039627', ds: '0.758644879672331', dc: '0.6' },
+{ section: 'asia', ring: 'rep', name: 'Indonesia', dr: '0.886705965183099', dt: '0.718', z: '20.6016789559562', ds: '0.755959342238608', dc: '0.6' },
+{ section: 'europe', ring: 'constmon', name: 'Netherlands', dr: '0.649368776972266', dt: '0.944', z: '58.0770437813582', ds: '0.424339092465856', dc: '0.6' },
+{ section: 'europe', ring: 'rep', name: 'Switzerland', dr: '0.587864785188073', dt: '0.955', z: '65.3320281915294', ds: '0.423156353875805', dc: '0.6' },
+{ section: 'asia', ring: 'absmon', name: 'Saudi Arabia', dr: '0.708846891784964', dt: '0.854', z: '44.8865183526846', ds: '0.766475167239279', dc: '0.6' },
+{ section: 'asia', ring: 'rep', name: 'Turkey', dr: '0.784456176065892', dt: '0.82', z: '32.1406330593457', ds: '0.678814673215821', dc: '0.6' },
+{ section: 'asia', ring: 'rep', name: 'Taiwan', dr: '0.673957972041543', dt: '0.907', z: '49.8359460735347', ds: '0.411724916563319', dc: '0.6' },
+{ section: 'asia', ring: 'rep', name: 'Iran', dr: '0.785795266603246', dt: '0.783', z: '29.7330751409544', ds: '0.743401718464214', dc: '0.6' },
+{ section: 'europe', ring: 'rep', name: 'Poland', dr: '0.716317120734051', dt: '0.88', z: '40.385720046751', ds: '0.5990244651587', dc: '0.6' },
+{ section: 'europe', ring: 'constmon', name: 'Sweden', dr: '0.603634340409573', dt: '0.945', z: '58.7339010368231', ds: '0.630699424931354', dc: '0.6' },
+{ section: 'europe', ring: 'constmon', name: 'Belgium', dr: '0.612743099509326', dt: '0.931', z: '56.0960745954453', ds: '0.3969396706048', dc: '0.6' },
+{ section: 'asia', ring: 'constmon', name: 'Thailand', dr: '0.764842556355216', dt: '0.777', z: '29.793125794014', ds: '0.642043788516873', dc: '0.6' },
+{ section: 'africa', ring: 'rep', name: 'Nigeria', dr: '0.865021407467937', dt: '0.539', z: '12.4770796952661', ds: '0.693112582778441', dc: '0.6' },
+{ section: 'europe', ring: 'rep', name: 'Austria', dr: '0.590369886370855', dt: '0.922', z: '57.1608752064129', ds: '0.484722364234571', dc: '0.6' },
+{ section: 'europe', ring: 'rep', name: 'Ireland', dr: '0.539993546938762', dt: '0.955', z: '65.373676345158', ds: '0.469357698849282', dc: '0.6' },
+{ section: 'asia', ring: 'rep', name: 'Israel', dr: '0.594849083155643', dt: '0.919', z: '55.3259934824376', ds: '0.36348729930702', dc: '0.6' },
+{ section: 'europe', ring: 'constmon', name: 'Norway', dr: '0.54651366544015', dt: '0.957', z: '63.2834625212567', ds: '0.617138834108854', dc: '0.6' },
+{ section: 'americas', ring: 'rep', name: 'Argentina', dr: '0.732189682548938', dt: '0.845', z: '31.5610984095026', ds: '0.78882145596752', dc: '0.6' },
+{ section: 'asia', ring: 'rep', name: 'Bangladesh', dr: '0.846921170871453', dt: '0.632', z: '12.205998648098', ds: '0.534321891243333', dc: '0.6' },
+{ section: 'asia', ring: 'rep', name: 'Philippines', dr: '0.80909759117504', dt: '0.718', z: '18.241599028125', ds: '0.595424250943932', dc: '0.6' },
+{ section: 'asia', ring: 'constmon', name: 'United Arab Emirates', dr: '0.595578891025684', dt: '0.89', z: '53.6659210951477', ds: '0.484441255487803', dc: '0.6' },
+{ section: 'africa', ring: 'rep', name: 'Egypt', dr: '0.802160436773801', dt: '0.707', z: '19.0913537381392', ds: '0.700212544035875', dc: '0.6' },
+{ section: 'europe', ring: 'constmon', name: 'Denmark', dr: '0.553433979381604', dt: '0.94', z: '60.3410716734048', ds: '0.769274233497411', dc: '0.6' },
+{ section: 'asia', ring: 'constmon', name: 'Malaysia', dr: '0.702976461884167', dt: '0.81', z: '35.299905892003', ds: '0.603913887889245', dc: '0.6' },
+
+{ section: 'asia', ring: 'rep', name: 'Vietnam', dr: '0.797872162755249', dt: '0.704', z: '18.284093824264', ds: '0.604021212627021', dc: '0.6' },
+{ section: 'africa', ring: 'rep', name: 'South Africa', dr: '0.755836985707162', dt: '0.709', z: '24.1972150865688', ds: '0.717345764836866', dc: '0.6' },
+{ section: 'americas', ring: 'rep', name: 'Chile', dr: '0.658797793517877', dt: '0.851', z: '39.3374207757565', ds: '0.675716077367189', dc: '0.7' },
+{ section: 'europe', ring: 'rep', name: 'Finland', dr: '0.548327748848547', dt: '0.938', z: '57.3325806686194', ds: '0.605892487517022', dc: '0.7' },
+{ section: 'americas', ring: 'rep', name: 'Colombia', dr: '0.741598295153726', dt: '0.767', z: '24.9951067956232', ds: '0.71151405190521', dc: '0.7' },
+{ section: 'asia', ring: 'rep', name: 'Pakistan', dr: '0.870513677235862', dt: '0.557', z: '3.12306677601221', ds: '0.691602149851988', dc: '0.7' },
+{ section: 'europe', ring: 'rep', name: 'Romania', dr: '0.656597797989614', dt: '0.828', z: '38.7936161327348', ds: '0.575460157183738', dc: '0.7' },
+{ section: 'europe', ring: 'rep', name: 'Czech Republic', dr: '0.605900634392085', dt: '0.891', z: '46.5494287824995', ds: '0.479383469450177', dc: '0.7' },
+{ section: 'europe', ring: 'rep', name: 'Portugal', dr: '0.602970377475295', dt: '0.864', z: '46.023370864056', ds: '0.492970674589749', dc: '0.7' },
+{ section: 'oceania', ring: 'constmon', name: 'New Zealand', dr: '0.542090360781671', dt: '0.931', z: '55.3249672504178', ds: '0.586422856777847', dc: '0.7' },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{ section: 'asia', ring: 'constmon', name: 'Bahrain', dr: '0.435312876447128', dt: '0.852', z: '46.0818420423986', ds: '0.0789739313490505', dc: '0.7' },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{ section: 'asia', ring: 'prov', name: 'Afghanistan', dr: '0.703413226287673', dt: '0.511', z: '-7.56351525414004', ds: '0.662964544309834', dc: '0.8' },
+
+
+
+
+
+{ section: 'asia', ring: 'rep', name: 'North Korea', dr: '0.681851330407782', dt: '0.733', z: '1.17225033511872', ds: '0.516226237426379', dc: '0.8' },
+
+
+
+
+
+
+
+
+
+
+
+{ section: 'africa', ring: 'prov', name: 'Guinea', dr: '0.622167720160763', dt: '0.477', z: '3.05906111205482', ds: '0.578136515592631', dc: '0.8' },
+
+
+
+
+
+
+
+
+{ section: 'africa', ring: 'prov', name: 'Chad', dr: '0.645156888979107', dt: '0.398', z: '-4.58753856890442', ds: '0.721713004746567', dc: '0.8' },
+
+
+
+
+
+
+
+{ section: 'americas', ring: 'constmon', name: 'Bermuda', dr: '0.161310607105468', dt: '0.981', z: '68.3413884428055', ds: '-0.153521248035406', dc: '0.8' },
+{ section: 'europe', ring: 'constmon', name: 'Monaco', dr: '0.116753073657', dt: '0.956', z: '75.6261060717409', ds: '-0.438929726110675', dc: '0.8' },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{ section: 'africa', ring: 'rep', name: 'Burundi', dr: '0.61989863547703', dt: '0.433', z: '-19.8887917187544', ds: '0.388915124580481', dc: '0.8' },
+
+
+
+
+
+
+
+
+{ section: 'africa', ring: 'rep', name: 'Gambia', dr: '0.479135157053987', dt: '0.496', z: '-2.93426568650608', ds: '0.310577247051276', dc: '0.9' },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{ section: 'oceania', ring: 'constmon', name: 'Tuvalu', dr: '0.00570611730226578', dt: '0.711', z: '23.8196964704387', ds: '-0.217005330405836', dc: '1' },
+
+	],
+};
+</script>
+
+<script>
+function getInputsAndDraw()
+{
+	document.getElementById('radar').innerHTML = "";
+	config.legend = document.getElementById('legend').value;
+	config.clockwise = document.getElementById('clockwise').checked;
+	config.symmetric = document.getElementById('symmetric').checked;
+	config.equidistant = document.getElementById('equidistant').checked;
+	if (document.getElementById('rotSection').checked)
+	{
+		config.sections.push(config.sections.shift());
+		document.getElementById('rotSection').checked = false;
+	}
+	if (document.getElementById('rotRing').checked)
+	{
+		config.rings.unshift(config.rings.pop());
+		document.getElementById('rotRing').checked = false;
+	}
+	showRadar(config);
+}
+</script>
+
+</head>
+
+<body onLoad="getInputsAndDraw()"
+	style="background-color: lightyellow; font-family: Arial, Helvetica, sans-serif;"
+>
+
+<p>
+Let's now look at presentation a bit. Rings are various shades of grey, but
+if you want to override those, you can do so per ring. Sections obviously
+have colours you can choose, and every data point within has the same
+colour... unless you override it per data point. The chart below makes it a
+point to override it for one of the countries.
+</p>
+
+<p>
+In addition, data points can have an opacity. The library can take an
+optional delta-colour value for each point, a value between 0 and 1. The
+opacity of the bar is drawn proportional to that value. In the example
+below, the opacity of each bar is inversely proportional to its GDP.
+</p>
+
+<p>
+Features to watch out for:
+<ul style="columns: 2">
+<li>
+	Data points can be given a delta-colour between [0, 1], with the
+	default being 1 (drawn as the darkest shade). If you can map another
+	dimension of data to delta-colour, go for it.
+</li>
+<li>
+	Data points can be given individual colours to override the section
+	colour assigned to them.
+</li>
+<li>
+	All features explained so far work as expected in all combinations.
+</li>
+</ul>
+</p>
+
+<p>
+Play around with these widgets to change the layout. View source to see how
+to configure the JSON object to invoke the library. For a refresher,
+go back to <a href="radarDemo4.html">the previous demo</a>. Some closing
+thoughts are <a href="radarDemo6.html">here</a>.
+
+Or click on:
+<a href="index.html">Start</a>,
+<a href="radarDemo1.html">Demo 1</a>,
+<a href="radarDemo2.html">Demo 2</a>,
+<a href="radarDemo3.html">Demo 3</a>,
+<a href="radarDemo4.html">Demo 4</a>,
+<a href="radarDemo5.html">Demo 5</a>,
+<a href="radarDemo6.html">Demo 6</a>.
+</p>
+
+<div>
+<form name="questionsForm" id="questionsForm" method="POST" onChange="getInputsAndDraw();">
+<select id="legend">
+	<option selected>Right</option>
+	<option>Left</option>
+	<option>Bottom</option>
+	<option>Top</option>
+	<option>None</option>
+</select>
+<label for="legend">legend</label>
+<input type="checkbox" id="clockwise" name="clockwise">
+<label for="clockwise">clockwise</label>
+<input type="checkbox" id="symmetric" name="symmetric">
+<label for="symmetric">symmetric</label>
+<input type="checkbox" id="equidistant" name="equidistant">
+<label for="equidistant">equidistant</label>
+<input type="checkbox" id="rotSection" name="rotateSection">
+<label for="rotSection">rotate section</label>
+<input type="checkbox" id="rotRing" name="rotateRing">
+<label for="rotRing">rotate ring</label>
+</form>
+</div>
+
+<!--
+	The radar chart placeholder. You can give it fonts and background
+	colours as you see fit. The id here has to match the one specified in
+	the configuration above.
+-->
+<div id="radar"></div>
+
+</body>
+</html>
