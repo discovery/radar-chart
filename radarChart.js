@@ -291,7 +291,7 @@ function showRadar(config)
 		var myColour = entry.colour || config.sections[mySection].colour;
 		var myOpacity = (entry.dc === undefined && 1) || entry.dc;
 		var myId = entry.id;
-		column = radar.append("g")
+		var column = radar.append("g")
 			.style("fill", myColour)
 			.style("opacity", myOpacity)
 			.style("stroke", "black")
